@@ -1,4 +1,4 @@
-import { IBook, IUpdateEmail } from "./book.interface";
+import { IBook, IUpdateEmail, IUpdateReviewerParams, IUpdatedBookParams } from "./book.interface";
 import { Book } from "./book.model";
 
 const bookCreate = async(book : IBook) : Promise<IBook | null> => {
@@ -31,7 +31,7 @@ const singleBook = async(id: string) : Promise<IBook | null> => {
     }
 };
 
-const updateBook = async({id, updatedData}) : Promise<IBook | null> => {
+const updateBook = async({id, updatedData} : IUpdatedBookParams) : Promise<IBook | null> => {
     const book = Book.findByIdAndUpdate(id, updatedData, {new : true});
     if(!book){
         throw new Error("No Users Found");
@@ -55,7 +55,7 @@ const updateReader = async({id, email} : IUpdateEmail) : Promise<IBook | null> =
     }
 };
 
-const updateReviewer = async({id, data}) : Promise<IBook |null> => {
+const updateReviewer = async({id, data} : IUpdateReviewerParams) : Promise<IBook |null> => {
     const book = await Book.findByIdAndUpdate({_id: id}, {
         $push: {
             reviews: data
@@ -70,7 +70,7 @@ const updateReviewer = async({id, data}) : Promise<IBook |null> => {
 };
 
 
-const deleteBook = async(id) : Promise<IBook[] | null> => {
+const deleteBook = async(id : string) : Promise<IBook[] | null> => {
     const deletedBook = await Book.findByIdAndDelete(id);
     const remainingBooks =await Book.find({});
     if(!deleteBook){

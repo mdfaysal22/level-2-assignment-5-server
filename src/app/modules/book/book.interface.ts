@@ -18,3 +18,13 @@ export interface IUpdateEmail {
     id: string,
     email: string
 }
+
+export interface IUpdateReviewerParams {
+    id: string,
+    data: IReviewer
+};
+
+export interface IUpdatedBookParams {
+    id: string,
+    updatedData: IBook
+}
